@@ -15,21 +15,22 @@ module.exports = async function (context, req) {
     const c = await getClient();
     const col = c.db("marketplace_db").collection("minecraft_fines");
 
-    const results = await col
+    const body = await col
       .aggregate([
         { $group: { _id: "$playerName", total: { $sum: "$amount" }, count: { $sum: 1 } } },
       ])
       .toArray();
 
     context.res = {
+      status: 200,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(results),
+      body,
     };
   } catch (err) {
     context.res = {
       status: 500,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ error: err.message, stack: err.stack }),
+      body: { error: err.message },
     };
   }
 };

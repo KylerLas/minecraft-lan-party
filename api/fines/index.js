@@ -24,14 +24,15 @@ module.exports = async function (context, req) {
     }));
 
     context.res = {
+      status: 200,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
+      body,
     };
   } catch (err) {
     context.res = {
       status: 500,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ error: err.message, stack: err.stack }),
+      body: { error: err.message },
     };
   }
 };
