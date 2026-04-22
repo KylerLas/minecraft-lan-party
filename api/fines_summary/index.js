@@ -11,17 +11,25 @@ async function getClient() {
 }
 
 module.exports = async function (context, req) {
-  const c = await getClient();
-  const col = c.db("marketplace_db").collection("minecraft_fines");
+  try {
+    const c = await getClient();
+    const col = c.db("marketplace_db").collection("minecraft_fines");
 
-  const results = await col
-    .aggregate([
-      { $group: { _id: "$playerName", total: { $sum: "$amount" }, count: { $sum: 1 } } },
-    ])
-    .toArray();
+    const results = await col
+      .aggregate([
+        { $group: { _id: "$playerName", total: { $sum: "$amount" }, count: { $sum: 1 } } },
+      ])
+      .toArray();
 
-  context.res = {
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(results),
-  };
+    context.res = {
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(results),
+    };
+  } catch (err) {
+    context.res = {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ error: err.message, stack: err.stack }),
+    };
+  }
 };

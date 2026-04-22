@@ -11,19 +11,27 @@ async function getClient() {
 }
 
 module.exports = async function (context, req) {
-  const c = await getClient();
-  const col = c.db("marketplace_db").collection("minecraft_fines");
+  try {
+    const c = await getClient();
+    const col = c.db("marketplace_db").collection("minecraft_fines");
 
-  const results = await col.find().sort({ timestamp: -1 }).limit(50).toArray();
+    const results = await col.find().sort({ timestamp: -1 }).limit(50).toArray();
 
-  const body = results.map((doc) => ({
-    ...doc,
-    _id: doc._id.toString(),
-    timestamp: doc.timestamp instanceof Date ? doc.timestamp.toISOString() : doc.timestamp,
-  }));
+    const body = results.map((doc) => ({
+      ...doc,
+      _id: doc._id.toString(),
+      timestamp: doc.timestamp instanceof Date ? doc.timestamp.toISOString() : doc.timestamp,
+    }));
 
-  context.res = {
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  };
+    context.res = {
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    };
+  } catch (err) {
+    context.res = {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ error: err.message, stack: err.stack }),
+    };
+  }
 };
