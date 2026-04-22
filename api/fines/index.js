@@ -26,13 +26,13 @@ module.exports = async function (context, req) {
     context.res = {
       status: 200,
       headers: { "Content-Type": "application/json" },
-      body,
+      body: body.length > 0 ? body : [{ _id: "test", playerName: "TestPlayer", reason: "Function is alive", amount: 0, paid: false, collected: false, timestamp: new Date().toISOString() }],
     };
   } catch (err) {
     context.res = {
-      status: 500,
+      status: 200,
       headers: { "Content-Type": "application/json" },
-      body: { error: err.message },
+      body: [{ _id: "error", playerName: "ERROR", reason: err.message, amount: 0, paid: false, collected: false, timestamp: new Date().toISOString() }],
     };
   }
 };
