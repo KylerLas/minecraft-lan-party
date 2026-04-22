@@ -1,19 +1,10 @@
 const { MongoClient } = require("mongodb");
 
-let client;
-
-async function getClient() {
-  if (!client) {
-    client = new MongoClient(process.env.COSMOS_CONN_STR);
-    await client.connect();
-  }
-  return client;
-}
-
 module.exports = async function (context, req) {
+  const client = new MongoClient(process.env.COSMOS_CONN_STR);
   try {
-    const c = await getClient();
-    const col = c.db("marketplace_db").collection("minecraft_fines");
+    await client.connect();
+    const col = client.db("marketplace_db").collection("minecraft_fines");
 
     const body = await col
       .aggregate([
@@ -32,5 +23,7 @@ module.exports = async function (context, req) {
       headers: { "Content-Type": "application/json" },
       body: { error: err.message },
     };
+  } finally {
+    await client.close();
   }
 };
