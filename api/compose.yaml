@@ -1,0 +1,11 @@
+services:
+  minecraftdb-api:
+    image: python:3.13-slim
+    container_name: minecraftdb-api
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - /mnt/storage/automation/python/minecraftdb-api:/app
+    ports:
+      - 9082:5000
+    command: sh -c "pip install flask flask-cors pymongo -q && python app.py"
