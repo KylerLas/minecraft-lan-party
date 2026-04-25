@@ -202,7 +202,7 @@ export default function App() {
             </div>
             <div className="stat-card unpaid">
               <span className="stat-value">{totalUnpaid}</span>
-              <span className="stat-label">Schmeckles Owed</span>
+              <span className="stat-label">Gold Owed</span>
             </div>
             <div className="stat-card">
               <span className="stat-value">{fines.filter((f) => f.paid).length}</span>
@@ -228,7 +228,7 @@ export default function App() {
                 {summary.map((s) => (
                   <tr key={s._id}>
                     <td className="player">{s._id}</td>
-                    <td>{s.total} schmeckles</td>
+                    <td>{s.total} gold</td>
                     <td>{s.count}</td>
                   </tr>
                 ))}
@@ -254,7 +254,7 @@ export default function App() {
                   <tr key={f._id} className={f.paid ? "paid" : "unpaid"}>
                     <td className="player">{f.playerName}</td>
                     <td>{f.reason}</td>
-                    <td>{f.amount} schmeckles</td>
+                    <td>{f.amount} gold</td>
                     <td>{f.paid ? "✅" : "❌"}</td>
                     <td>{f.collected ? "✅" : "❌"}</td>
                     <td>{new Date(f.timestamp).toLocaleString()}</td>

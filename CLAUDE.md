@@ -109,7 +109,7 @@ Immutable event log. Each document is a fine issued to a player. Never updated a
   "playerName": "string",
   "playerUuid": "string (UUID)",
   "reason":     "string",
-  "amount":     "number (schmeckles)",
+  "amount":     "number (gold)",
   "paid":       "boolean",
   "collected":  "boolean",
   "timestamp":  "datetime"
@@ -161,7 +161,7 @@ Insurance tiers (1–3) are a planned plugin feature. Field stored as `null` unt
 ## Frontend — Current Features
 
 - Live polling every 5 seconds
-- Stat cards: total fines, schmeckles owed, paid/unpaid counts
+- Stat cards: total fines, gold owed, paid/unpaid counts
 - Player totals table (sorted by total owed)
 - Full fine log table with paid/collected status
 
