@@ -272,6 +272,84 @@ tbody tr:hover {
 
 td.overdue { color: #e05252; }
 
+/* ── Boss kill cards ─────────────────────────────────────────────────── */
+.boss-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.boss-card {
+  background: #16213e;
+  border-radius: 10px;
+  padding: 1.5rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  text-align: center;
+  border: 1px solid #2d5a27;
+}
+
+.boss-guardian { border-color: #00bcd4; }
+.boss-wither   { border-color: #9c27b0; }
+.boss-dragon   { border-color: #9b59b6; background: linear-gradient(160deg, #16213e 60%, #1a0a2e); }
+
+.boss-emoji { font-size: 2.5rem; line-height: 1; }
+
+.boss-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #e0e0e0;
+  letter-spacing: 0.5px;
+}
+
+.boss-guardian .boss-name { color: #00bcd4; }
+.boss-wither   .boss-name { color: #ce93d8; }
+.boss-dragon   .boss-name { color: #b39ddb; }
+
+.boss-reward {
+  font-size: 0.8rem;
+  color: #ffd700;
+  font-weight: 600;
+}
+
+.boss-divider {
+  width: 60%;
+  height: 1px;
+  background: #2d3a5a;
+  margin: 0.4rem 0;
+}
+
+.boss-stat-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #666;
+  margin-top: 0.2rem;
+}
+
+.boss-stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #5dbb63;
+  line-height: 1.1;
+}
+
+.boss-top { font-size: 0.9rem; }
+
+.boss-kills {
+  color: #888;
+  font-size: 0.8rem;
+}
+
+.boss-none {
+  color: #444;
+  font-style: italic;
+  font-size: 0.85rem;
+}
+
 /* ── Commands tab ────────────────────────────────────────────────────── */
 .commands-wrap {
   display: flex;

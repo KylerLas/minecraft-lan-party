@@ -22,6 +22,43 @@ function fmt(dateStr) {
   return new Date(dateStr).toLocaleDateString();
 }
 
+const BOSSES = [
+  { key: "guardianKills",  label: "Elder Guardian", emoji: "🔱", gold: 75,  color: "boss-guardian" },
+  { key: "witherKills",    label: "Wither Boss",    emoji: "💀", gold: 220, color: "boss-wither"   },
+  { key: "dragonKills",    label: "Ender Dragon",   emoji: "🐉", gold: 350, color: "boss-dragon"   },
+];
+
+function BossKillCards({ players }) {
+  return (
+    <div className="boss-cards">
+      {BOSSES.map((boss) => {
+        const sorted = [...players]
+          .filter((p) => (p[boss.key] || 0) > 0)
+          .sort((a, b) => (b[boss.key] || 0) - (a[boss.key] || 0));
+        const top = sorted[0];
+        const total = players.reduce((s, p) => s + (p[boss.key] || 0), 0);
+
+        return (
+          <div key={boss.key} className={`boss-card ${boss.color}`}>
+            <div className="boss-emoji">{boss.emoji}</div>
+            <div className="boss-name">{boss.label}</div>
+            <div className="boss-reward">{boss.gold} gold purse</div>
+            <div className="boss-divider" />
+            <div className="boss-stat-label">Total Kills</div>
+            <div className="boss-stat-value">{total}</div>
+            <div className="boss-stat-label">Top Slayer</div>
+            <div className="boss-top">
+              {top
+                ? <><span className="player">{top.playerName}</span><span className="boss-kills"> ×{top[boss.key]}</span></>
+                : <span className="boss-none">None yet</span>}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 const COMMANDS = [
   {
     category: "Economy",
@@ -298,6 +335,8 @@ export default function App() {
       {tab === "commands" && <CommandsTab />}
 
       {tab === "statistics" && (
+        <>
+        <BossKillCards players={players} />
         <section className="section">
           <h2>Player Statistics</h2>
           <div className="stats-table-wrap">
@@ -333,6 +372,7 @@ export default function App() {
             </table>
           </div>
         </section>
+        </>
       )}
     </div>
   );
