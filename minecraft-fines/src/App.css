@@ -272,6 +272,28 @@ tbody tr:hover {
 
 td.overdue { color: #e05252; }
 
+/* ── Commands tab ────────────────────────────────────────────────────── */
+.commands-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cmd-syntax {
+  font-family: "Courier New", monospace;
+  font-size: 0.85rem;
+  color: #7ecfff;
+  background: #0f1e36;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.cmd-desc {
+  color: #c0c0c0;
+  font-size: 0.9rem;
+}
+
 /* ── Statistics table ────────────────────────────────────────────────── */
 .stats-table-wrap {
   overflow-x: auto;

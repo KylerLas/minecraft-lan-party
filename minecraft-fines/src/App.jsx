@@ -22,6 +22,78 @@ function fmt(dateStr) {
   return new Date(dateStr).toLocaleDateString();
 }
 
+const COMMANDS = [
+  {
+    category: "Economy",
+    entries: [
+      { syntax: "/pay <player> <amount>",             desc: "Pay gold ingots to another player" },
+      { syntax: "/pay <player> <amount> nugget",      desc: "Pay in raw nuggets" },
+      { syntax: "/pay <player> <amount> ingot",       desc: "Pay in ingots (same as default)" },
+      { syntax: "/pay <player> <amount> block",       desc: "Pay in gold blocks (×81 nuggets each)" },
+      { syntax: "/request <player> <amount>",         desc: "Request gold from another player" },
+      { syntax: "/requests received",                 desc: "View incoming requests with Accept / Decline buttons" },
+      { syntax: "/requests sent",                     desc: "View your sent requests with a Cancel button" },
+      { syntax: "/goldscore",                         desc: "Print the full gold leaderboard in chat" },
+    ],
+  },
+  {
+    category: "Purgatory",
+    entries: [
+      { syntax: "/pay death",                         desc: "Pay your death tax to exit ghost state and revive" },
+    ],
+  },
+  {
+    category: "Insurance — India Insures You",
+    entries: [
+      { syntax: "/insurance bronze",                  desc: "Subscribe to Bronze tier (35% death penalty, 0.5% daily cost)" },
+      { syntax: "/insurance silver",                  desc: "Subscribe to Silver tier (20% death penalty, 1% daily cost)" },
+      { syntax: "/insurance gold",                    desc: "Subscribe to Gold tier (8% death penalty, 2% daily cost)" },
+      { syntax: "/insurance cancel",                  desc: "Cancel your policy at the end of the current billing cycle" },
+      { syntax: "/insurance status",                  desc: "View your active tier, death penalty %, and next invoice" },
+    ],
+  },
+  {
+    category: "Bank & Market",
+    entries: [
+      { syntax: "/price",                             desc: "Check the current sell price of the item in your hand" },
+    ],
+  },
+  {
+    category: "General",
+    entries: [
+      { syntax: "/help",                              desc: "Show this command list in chat" },
+    ],
+  },
+];
+
+function CommandsTab() {
+  return (
+    <div className="commands-wrap">
+      {COMMANDS.map((group) => (
+        <section key={group.category} className="section">
+          <h2>{group.category}</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Command</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {group.entries.map((e) => (
+                <tr key={e.syntax}>
+                  <td><code className="cmd-syntax">{e.syntax}</code></td>
+                  <td className="cmd-desc">{e.desc}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      ))}
+    </div>
+  );
+}
+
 export default function App() {
   const [tab, setTab] = useState("fines");
   const [fines, setFines] = useState([]);
@@ -78,6 +150,9 @@ export default function App() {
         </button>
         <button className={tab === "statistics" ? "tab active" : "tab"} onClick={() => setTab("statistics")}>
           Statistics
+        </button>
+        <button className={tab === "commands" ? "tab active" : "tab"} onClick={() => setTab("commands")}>
+          Commands
         </button>
       </div>
 
@@ -220,6 +295,8 @@ export default function App() {
           </section>
         </>
       )}
+      {tab === "commands" && <CommandsTab />}
+
       {tab === "statistics" && (
         <section className="section">
           <h2>Player Statistics</h2>
