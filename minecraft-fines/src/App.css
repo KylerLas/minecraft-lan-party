@@ -271,3 +271,17 @@ tbody tr:hover {
 }
 
 td.overdue { color: #e05252; }
+
+/* ── Statistics table ────────────────────────────────────────────────── */
+.stats-table-wrap {
+  overflow-x: auto;
+}
+
+.stats-table-wrap table {
+  min-width: 900px;
+}
+
+td.stat-highlight {
+  color: #e05252;
+  font-weight: 600;
+}

@@ -76,6 +76,9 @@ export default function App() {
         <button className={tab === "players" ? "tab active" : "tab"} onClick={() => setTab("players")}>
           Players
         </button>
+        <button className={tab === "statistics" ? "tab active" : "tab"} onClick={() => setTab("statistics")}>
+          Statistics
+        </button>
       </div>
 
       {tab === "fines" && (
@@ -216,6 +219,43 @@ export default function App() {
             </table>
           </section>
         </>
+      )}
+      {tab === "statistics" && (
+        <section className="section">
+          <h2>Player Statistics</h2>
+          <div className="stats-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Player</th>
+                  <th>Active Gold</th>
+                  <th>Deaths</th>
+                  <th>Mob Kills</th>
+                  <th>Boss Kills</th>
+                  <th>PvP Kills (Purge)</th>
+                  <th>Gold Received</th>
+                  <th>Gold Spent</th>
+                  <th>Total Transactions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[...players].sort((a, b) => (b.mobKills || 0) - (a.mobKills || 0)).map((p) => (
+                  <tr key={p._id}>
+                    <td className="player">{p.playerName}</td>
+                    <td>{Math.round(p.gold || 0)}</td>
+                    <td>{p.deaths || 0}</td>
+                    <td>{p.mobKills || 0}</td>
+                    <td>{p.bossesKilled || 0}</td>
+                    <td className={(p.pvpKillsDuringPurge || 0) > 0 ? "stat-highlight" : ""}>{p.pvpKillsDuringPurge || 0}</td>
+                    <td>{p.goldReceived || 0}</td>
+                    <td>{p.goldSpent || 0}</td>
+                    <td>{(p.transactionsSent || 0) + (p.transactionsReceived || 0)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
       )}
     </div>
   );
